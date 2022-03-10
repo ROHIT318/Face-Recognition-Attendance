@@ -5,4 +5,5 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('displayName/<str:name>', views.displayName, name='displayName'),
     path('startCamera/', views.startCamera, name='startCamera'),
+    path('register/', views.register, name='register'),
 ]
