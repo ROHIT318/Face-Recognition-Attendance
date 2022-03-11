@@ -18,6 +18,13 @@ def displayName(request, name):
 
 # For test purpose only
 def register(request):
-    img = showImage()
-    context = {'img': img}
+    if request.method == 'POST':
+        msg = showImage(request.POST['unique_id'], request.POST['student_name'])
+        context = {'msg': msg}
+        return render(request, 'del_msg.html', context)
+    return render(request, 'del_register.html')
+
+def imageShow(request):
+    imgs = registration_form.objects.all()
+    context = {'Imgs': imgs}
     return render(request, 'show_image.html', context)
