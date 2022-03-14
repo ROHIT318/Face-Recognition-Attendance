@@ -19,4 +19,49 @@
 	```bash
 	python manage.py runserver
 	```
-9) Web app should be running at `http://localhost:8000/` 
+9. Web app should be running at `http://localhost:8000/`
+
+# All Web Pages and Details: (For the time being) 
+**1) Home Page: (This will be the Index page of website)**
+> Will contain only three cards:
+1. Start Attendance
+2. Register Teacher
+3. Register Student
+
+**2) Start Attendance: (This page will open after button 1 of Home Page is pressed)**
+> Will contain three input type text, a button:
+1.	Teacher Username (input)
+2.	Subject Code (Dropdown menu)
+3.	Password (Input)
+4.	Start Attendance (Button)
+
+**3) Camera Starts: (This page will start after “Start Attendance” button 4 of 2nd procedure is pressed)**
+> Camera window will pop up, after ϰ seconds it will automatically close and will send the name of the person to backend.
+
+**4) Attendance Show Page: (This page will show the details of students present or attendance done in the current class.)**
+> At top there will be two buttons:
+1.	Stop Attendance (Button)
+2.	Take Attendance (Button)
+> Followed by a table containing all the details of the student:
+
+Cin_id | Name | Subject Code | Date | Time
+-------|------|--------------|------|------
+XXXX | Rohit Sharma | CMSMXXXX | 28/02/22 | 21:38
+YYYY | Sanjibani Mishra | CMSMXXXX | 28/02/22 | 21:40
+ZZZZ | Atrimoy Saha | CMSMXXXX | 28/02/22 | 21:45
+
+**5) Register Teacher: (A page where teacher can register by pressing button 2 of Home Page)**
+> Will contain six input type text, one button:
+1. t_id (Text)
+2. t_name (Text)
+3. t_department (Dropdown menu)
+4. t_subjectcode (Dropdown menu)
+5. t_pswd (Input type password at least 2)
+6. Register (Button)
+
+**6) Register Student: (To enter student details)**
+> Will contain two input type text, one button:
+1. unique_id (Text)
+2. student_name (Text)
+
+**7) For registration of student more web page views will be added later.**
