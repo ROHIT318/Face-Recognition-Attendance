@@ -13,6 +13,7 @@ urlpatterns = [
 
     # For test purpose
     path('imageShow/', views.imageShow, name='imageShow'),
+    path('readImage/', views.readImage, name='readImage'),
 ]
 
 urlpatterns = urlpatterns + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

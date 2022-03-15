@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from .models import *
 from .getdetails import getdetails
-from .register import showImage
+from .register import storeImage
 
 def home(request):
     return render(request, 'Index.html')
@@ -19,7 +19,7 @@ def displayName(request, name):
 # For test purpose only
 def register(request):
     if request.method == 'POST':
-        msg = showImage(request.POST['unique_id'], request.POST['student_name'])
+        msg = storeImage(request.POST['unique_id'], request.POST['student_name'])
         context = {'msg': msg}
         return render(request, 'del_msg.html', context)
     return render(request, 'del_register.html')
@@ -28,3 +28,13 @@ def imageShow(request):
     imgs = registration_form.objects.all()
     context = {'Imgs': imgs}
     return render(request, 'show_image.html', context)
+
+def readImage(request):
+    registeredStudents = registration_form.objects.all()
+    # Traverse each image
+    for reg in registeredStudents:
+        print(reg.img_1.url)
+        print(reg.img_2.url)
+        print(reg.img_3.url)
+        print(reg.img_4.url)
+        print(reg.img_5.url)

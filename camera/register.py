@@ -1,18 +1,33 @@
 import os
 import cv2
-# import numpy as np
 import time
-from .getdetails import get_face_only
+from numpy import asarray
+from .getdetails import get_face_only, get_embedding
 from .models import registration_form
-from django.core.files.base import ContentFile
+from sklearn.preprocessing import Normalizer, LabelEncoder
+
+# To load faceNet model
+from keras.models import load_model
+# To load scikit SVM model
+from sklearn.svm import SVC
+# To store and load trained SVM model
+import pickle
 
 # Frame image dimension for feeding into model
 width = 160
 height = 160
 dim = (width, height)
 
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-def showImage(str1, str2):
+# Face recognition model
+base_dir = os.getcwd()
+model_dir = os.path.join(base_dir, "{}\\{}".format('camera','facenet'))
+face_model = load_model(model_dir)
+
+
+def storeImage(str1, str2):
+	global BASE_DIR
 	uniqueId = str1
 	studentName = str2
 	# Face image variable
@@ -26,8 +41,6 @@ def showImage(str1, str2):
 	video_capture.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
 
 	while True:
-		BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
 		ret, frame = video_capture.read()
 		cv2.imshow('Video', frame)
 		img = get_face_only(frame)
@@ -88,3 +101,49 @@ def showImage(str1, str2):
 
 	video_capture.release()
 	cv2.destroyAllWindows()
+
+
+def createDataset():
+	registeredStudents = registration_form.objects.all()
+	images, labels = list(), list()
+
+	for reg in registeredStudents:
+		images, labels = list(), list()
+		images.extend(cv2.imread(BASE_DIR + reg.img_1.url))
+		images.extend(cv2.imread(BASE_DIR + reg.img_2.url))
+		images.extend(cv2.imread(BASE_DIR + reg.img_3.url))
+		images.extend(cv2.imread(BASE_DIR + reg.img_4.url))
+		images.extend(cv2.imread(BASE_DIR + reg.img_5.url))
+		for i in range(5):
+			labels.extend(reg.unique_id)
+	return asarray(images), asarray(labels)
+
+
+def startTraining():
+	trainEmbeddings = list()
+	trainImages, trainLabels = createDataset()
+
+	# Get embeding for each training images
+	for faceImage in trainImages:
+		embedding = get_embedding(faceImage)
+		trainEmbeddings.append(embedding)
+	trainEmbeddings = asarray(trainEmbeddings)
+
+	# Normalizing face embedding vectors
+	inputEncoder = Normalizer(norm='l2')
+	trainImages = inputEncoder.transform(trainImages)
+
+	# Target name should be converted to integers
+	outputEncoder = LabelEncoder()
+	outputEncoder.fit(trainLabels)
+	trainLabels = outputEncoder.transform(trainLabels)
+
+	# Using Linear Support Vector Machine for predicting using embeddings
+	model = SVC(kernel='linear')
+	model.fit(trainImages, trainEmbeddings)
+
+	# Storing and loading SVM model
+	filename = 'SVM'
+	pickle.dump(model, open(filename, 'wb'))
+
+	return "Training successfull."
