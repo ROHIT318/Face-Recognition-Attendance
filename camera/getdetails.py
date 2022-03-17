@@ -1,6 +1,7 @@
 import cv2
 import os
 from datetime import datetime
+from .models import registration_form
 
 # All requirements for face recognition
 from keras.models import load_model

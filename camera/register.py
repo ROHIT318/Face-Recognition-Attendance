@@ -109,11 +109,12 @@ def createDataset():
 
 	for reg in registeredStudents:
 		images, labels = list(), list()
-		images.extend(cv2.imread(BASE_DIR + reg.img_1.url))
-		images.extend(cv2.imread(BASE_DIR + reg.img_2.url))
-		images.extend(cv2.imread(BASE_DIR + reg.img_3.url))
-		images.extend(cv2.imread(BASE_DIR + reg.img_4.url))
-		images.extend(cv2.imread(BASE_DIR + reg.img_5.url))
+		# Remove get_face_only when not testing
+		images.extend(get_face_only(cv2.imread(BASE_DIR + reg.img_1.url)))
+		images.extend(get_face_only(cv2.imread(BASE_DIR + reg.img_2.url)))
+		images.extend(get_face_only(cv2.imread(BASE_DIR + reg.img_3.url)))
+		images.extend(get_face_only(cv2.imread(BASE_DIR + reg.img_4.url)))
+		images.extend(get_face_only(cv2.imread(BASE_DIR + reg.img_5.url)))
 		for i in range(5):
 			labels.extend(reg.unique_id)
 	return asarray(images), asarray(labels)
