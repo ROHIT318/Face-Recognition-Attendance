@@ -6,6 +6,8 @@ from .getdetails import get_face_only, get_embedding
 from .models import registration_form
 from sklearn.preprocessing import Normalizer, LabelEncoder
 
+from sklearn.metrics import accuracy_score
+
 # To load faceNet model
 from keras.models import load_model
 # To load scikit SVM model
@@ -108,43 +110,75 @@ def createDataset():
 	images, labels = list(), list()
 
 	for reg in registeredStudents:
-		images, labels = list(), list()
+		faces, label = list(), list()
+		# images, labels = list(), list()
 		# Remove get_face_only when not testing
-		images.extend(get_face_only(cv2.imread(BASE_DIR + reg.img_1.url)))
-		images.extend(get_face_only(cv2.imread(BASE_DIR + reg.img_2.url)))
-		images.extend(get_face_only(cv2.imread(BASE_DIR + reg.img_3.url)))
-		images.extend(get_face_only(cv2.imread(BASE_DIR + reg.img_4.url)))
-		images.extend(get_face_only(cv2.imread(BASE_DIR + reg.img_5.url)))
+		faces.append(get_face_only(cv2.imread(BASE_DIR + reg.img_1.url)))
+		print(reg.img_1.url)
+		print("ONE")
+		faces.append(get_face_only(cv2.imread(BASE_DIR + reg.img_2.url)))
+		print(reg.img_2.url)
+		print("TWO")
+		faces.append(get_face_only(cv2.imread(BASE_DIR + reg.img_3.url)))
+		print(reg.img_3.url)
+		print("THREE")
+		faces.append(get_face_only(cv2.imread(BASE_DIR + reg.img_4.url)))
+		print(reg.img_4.url)
+		print("FOUR")
+		faces.append(get_face_only(cv2.imread(BASE_DIR + reg.img_5.url)))
+		print(reg.img_5.url)
+		print("FIVE")
 		for i in range(5):
-			labels.extend(reg.unique_id)
+			label.append(reg.unique_id)
+		print(label)
+		labels.extend(label)
+		images.extend(faces)
+		print("Once Done!")
+	print(labels)
 	return asarray(images), asarray(labels)
 
 
 def startTraining():
 	trainEmbeddings = list()
 	trainImages, trainLabels = createDataset()
+	print("Dataset Created!")
 
 	# Get embeding for each training images
 	for faceImage in trainImages:
 		embedding = get_embedding(faceImage)
 		trainEmbeddings.append(embedding)
 	trainEmbeddings = asarray(trainEmbeddings)
+	print("Embeddings Created!")
 
 	# Normalizing face embedding vectors
 	inputEncoder = Normalizer(norm='l2')
-	trainImages = inputEncoder.transform(trainImages)
+	trainEmbeddings = inputEncoder.transform(trainEmbeddings)
+	print("Face Embedding Vector Normalized!")
 
 	# Target name should be converted to integers
 	outputEncoder = LabelEncoder()
 	outputEncoder.fit(trainLabels)
 	trainLabels = outputEncoder.transform(trainLabels)
+	print("Target Name Converted To Integers!")
 
 	# Using Linear Support Vector Machine for predicting using embeddings
 	model = SVC(kernel='linear')
-	model.fit(trainImages, trainEmbeddings)
+	model.fit(trainEmbeddings, trainLabels)
+	print("SVM Model Training Done!")
+
+	# Tesing model accuracy
+	predictTrain = model.predict(trainEmbeddings)
+	# predictTest = model.predict(testEmbeddings)
+
+	trainAcc = accuracy_score(trainLabels, predictTrain)
+	# testAcc = accuracy_score(testy, predict_test)
+
+
+
 
 	# Storing and loading SVM model
 	filename = 'SVM'
 	pickle.dump(model, open(filename, 'wb'))
+	print("SVM Model Saved!")
 
-	return "Training successfull."
+	return trainAcc

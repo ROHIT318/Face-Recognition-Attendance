@@ -31,5 +31,5 @@ def imageShow(request):
 
 def train(request):
     message = startTraining()
-    context = {'mess': message}
+    context = {'msg': message}
     return render(request, 'del_msg.html', context)
