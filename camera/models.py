@@ -9,3 +9,5 @@ class registration_form(models.Model):
 	img_3 = models.ImageField(upload_to='pics')
 	img_4 = models.ImageField(upload_to='pics')
 	img_5 = models.ImageField(upload_to='pics')
+	img_6 = models.ImageField(upload_to='pics')
+	img_7 = models.ImageField(upload_to='pics')

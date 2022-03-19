@@ -45,7 +45,9 @@ def storeImage(str1, str2):
 	while True:
 		ret, frame = video_capture.read()
 		cv2.imshow('Video', frame)
-		img = get_face_only(frame)
+		# For testing purpose taking full image
+		# img = get_face_only(frame)
+		img = frame
 
 		# Strorage location
 		link = BASE_DIR + "\\media\\pics\\"
@@ -85,10 +87,26 @@ def storeImage(str1, str2):
 			i = i + 1
 			time.sleep(waitTime)
 
-		elif i==6:
+
+		if img!=[] and i==6:
+			img_6 = "pics/" + str(i) + "_" + uniqueId + ".jpg"
+			img_6_link = link + str(i) + "_" + uniqueId + ".jpg"
+			cv2.imwrite(img_6_link, img)
+			i = i + 1
+			time.sleep(waitTime)
+
+		elif img!=[] and i==7:
+			img_7 = "pics/" + str(i) + "_" + uniqueId + ".jpg"
+			img_7_link = link + str(i) + "_" + uniqueId + ".jpg"
+			cv2.imwrite(img_7_link, img)
+			i = i + 1
+			time.sleep(waitTime)
+
+		elif i==8:
 			# Storing Image in Database Here
 			student = registration_form.objects.create(unique_id=uniqueId, name=studentName, 
-				img_1=img_1, img_2=img_2, img_3=img_3, img_4=img_4, img_5=img_5)
+				img_1=img_1, img_2=img_2, img_3=img_3, img_4=img_4, img_5=img_5, 
+				img_6=img_6, img_7=img_7)
 			student.save()
 
 			video_capture.release()
@@ -112,7 +130,7 @@ def createDataset():
 	for reg in registeredStudents:
 		faces, label = list(), list()
 		# images, labels = list(), list()
-		# Remove get_face_only when not testing
+		# Remove get_face_only when not testing and print statements
 		faces.append(get_face_only(cv2.imread(BASE_DIR + reg.img_1.url)))
 		print(reg.img_1.url)
 		print("ONE")
@@ -128,7 +146,13 @@ def createDataset():
 		faces.append(get_face_only(cv2.imread(BASE_DIR + reg.img_5.url)))
 		print(reg.img_5.url)
 		print("FIVE")
-		for i in range(5):
+		faces.append(get_face_only(cv2.imread(BASE_DIR + reg.img_6.url)))
+		print(reg.img_6.url)
+		print("SIX")
+		faces.append(get_face_only(cv2.imread(BASE_DIR + reg.img_7.url)))
+		print(reg.img_7.url)
+		print("SEVEN")
+		for i in range(7):
 			label.append(reg.unique_id)
 		print(label)
 		labels.extend(label)
@@ -172,9 +196,6 @@ def startTraining():
 
 	trainAcc = accuracy_score(trainLabels, predictTrain)
 	# testAcc = accuracy_score(testy, predict_test)
-
-
-
 
 	# Storing and loading SVM model
 	filename = 'SVM'
