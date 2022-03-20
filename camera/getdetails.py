@@ -13,8 +13,8 @@ base_dir = os.getcwd()
 model_dir = os.path.join(base_dir, "{}\\{}".format('camera','facenet'))
 face_model = load_model(model_dir)
 faceCascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
-svm_dir = os.path.join(base_dir, "{}\\{}".format('camera','SVM'))
-svm_model = pickle.load(open(svm_dir, 'rb'))
+# svm_dir = os.path.join(base_dir, "{}\\{}".format('camera','SVM'))
+# svm_model = pickle.load(open(svm_dir, 'rb'))
 
 # Frame image dimension for feeding into model
 width = 160
@@ -25,11 +25,14 @@ dim = (width, height)
 import numpy as np
 from numpy import asarray, expand_dims
 
-# Loading all unique ids of student
-unique_id_list = list()
-students = registration_form.objects.all()
-for student in students:
-	unique_id_list.append(student.unique_id)
+# Loading all unique ids from student table
+def getStudentList():
+	uniqueIdList = list()
+	students = registration_form.objects.all()
+	for student in students:
+		uniqueIdList.append(student.unique_id)
+	return uniqueIdList
+uniqueIdList = getStudentList()
 
 def getdetails():
 	startAttendanceProcess = False
@@ -39,7 +42,7 @@ def getdetails():
 	
 	while True:
 		ret, frame = video_capture.read()
-		final_frame = get_face_rectangle(frame)
+		final_frame, studentId = get_face_rectangle(frame)
 		# resizeFaceFrame = cv2.resize()
 		cv2.imshow('Video', final_frame)
 
@@ -55,9 +58,8 @@ def getdetails():
 		elif (formattedTime == tillTime):
 			video_capture.release()
 			cv2.destroyAllWindows()
-			student_id = get_name(frame)
 			# Return name and id here
-			return student_id
+			return studentId
 
 		# Hit 'q' on the keyboard to quit!
 		if cv2.waitKey(1) & 0xFF == ord('q'):
@@ -66,7 +68,13 @@ def getdetails():
 	video_capture.release()
 	cv2.destroyAllWindows()
 
+# UserWarning: Trying to unpickle estimator SVC from version 0.24.1 when using version 1.0.2. This might lead to breaking code or invalid results. Use at your own risk. For more info please refer to:
+# https://scikit-learn.org/stable/modules/model_persistence.html#security-maintainability-limitations
+
+# WARNING:tensorflow:No training configuration found in save file, so the model was *not* compiled. Compile it manually.
+
 def get_face_rectangle(img):
+	text = ""
 	faces = faceCascade.detectMultiScale(
 		img,
 		scaleFactor=1.3,
@@ -77,25 +85,23 @@ def get_face_rectangle(img):
 		text = get_name(img)
 		font = cv2.FONT_HERSHEY_DUPLEX
 		cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 2)
-		cv2.putText(img, text, (x + 6, y - 6), font, 0.3, (255, 255, 255), 1)
-	return img
+		cv2.putText(img, text, (x + 6, y - 6), font, 0.6, (255, 255, 255), 1)
+	return img, text
 
 def get_name(img):	
 	# Retaining last embedding and person name
-	global svm_model, unique_id_list
+	global svm_model, uniqueIdList
 
 	face_img_emb = np.array([])
-	student_id = ""
 	face_img = get_face_only(img)
+
 	if len(face_img) != 0:
 		face_img_emb = get_embedding(face_img)
 		face_img_emb = np.expand_dims(face_img_emb, axis=0)
-		student_id = unique_id_list[svm_model.predict(face_img_emb)[0]]
-		return student_id
-	elif student_id == "":
-		return "Unable to detect."
+		studentId = uniqueIdList[svm_model.predict(face_img_emb)[0]]
+		return studentId
 	else:
-		return student_id
+		return "Unable to detect."
 
 # Method to extraxt face from an image
 def get_face_only(img):

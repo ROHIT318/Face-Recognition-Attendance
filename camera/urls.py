@@ -14,6 +14,7 @@ urlpatterns = [
     # For test purpose
     path('imageShow/', views.imageShow, name='imageShow'),
     path('train/', views.train, name='train'),
+    path('showId/', views.showId, name='showId'),
 ]
 
 urlpatterns = urlpatterns + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

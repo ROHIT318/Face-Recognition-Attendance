@@ -33,3 +33,11 @@ def train(request):
     message = startTraining()
     context = {'msg': message}
     return render(request, 'del_msg.html', context)
+
+def showId(request):
+    unique_id_list = list()
+    students = registration_form.objects.all()
+    for student in students:
+        unique_id_list.append(student.unique_id)
+    context = {'msg': unique_id_list}
+    return render(request, 'del_msg.html', context)
