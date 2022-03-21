@@ -13,7 +13,7 @@ from keras.models import load_model
 # To load scikit SVM model
 from sklearn.svm import SVC
 # To store and load trained SVM model
-from sklearn.externals import joblib
+# from sklearn.externals import joblib
 import pickle
 
 # Frame image dimension for feeding into model
@@ -199,9 +199,11 @@ def startTraining():
 	# testAcc = accuracy_score(testy, predict_test)
 
 	# Storing and loading SVM model
-	filename = 'SVM'
-	# pickle.dump(model, open(filename, 'wb'))
-	joblib.dump(model, filename)
+	SVM_DIR = os.path.join(BASE_DIR, "{}\\{}".format('camera','SVM'))
+	# filename = 'SVM'
+	with open(SVM_DIR, 'wb') as files:
+		pickle.dump(model, files)
+	# joblib.dump(model, filename)
 	print("SVM Model Saved!")
 
 	return trainAcc

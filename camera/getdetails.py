@@ -13,8 +13,8 @@ base_dir = os.getcwd()
 model_dir = os.path.join(base_dir, "{}\\{}".format('camera','facenet'))
 face_model = load_model(model_dir)
 faceCascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
-# svm_dir = os.path.join(base_dir, "{}\\{}".format('camera','SVM'))
-# svm_model = pickle.load(open(svm_dir, 'rb'))
+SVM_DIR = os.path.join(base_dir, "{}\\{}".format('camera','SVM'))
+svm_model = pickle.load(open(SVM_DIR, 'rb'))
 
 # Frame image dimension for feeding into model
 width = 160
@@ -67,11 +67,6 @@ def getdetails():
 
 	video_capture.release()
 	cv2.destroyAllWindows()
-
-# UserWarning: Trying to unpickle estimator SVC from version 0.24.1 when using version 1.0.2. This might lead to breaking code or invalid results. Use at your own risk. For more info please refer to:
-# https://scikit-learn.org/stable/modules/model_persistence.html#security-maintainability-limitations
-
-# WARNING:tensorflow:No training configuration found in save file, so the model was *not* compiled. Compile it manually.
 
 def get_face_rectangle(img):
 	text = ""
