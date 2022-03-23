@@ -15,11 +15,24 @@
 	```
 	* This will take a lot of time depending on you internet speed, download size upto 800 MB.
 7. Download attendance.zip(160+ MB) provided by me before, unzip navigate inside it. Copy `camera\facenet_keras.h5`, `camera\SVM`, `camera\facenet` inside your cloned repo.
-8. Come to root folder of your repo, run command 
+8. Web app uses postgresql at backend make sure you have it installed and running at defualt `port: 5432`. Use password `1234` when prompted to enter a password or change it in `attendance/settings.py` file, if you enter a different password.
+9. create a database named `rohit` or change it in `attendance/settings.py` file, if you created a database of different name.
+10. Come to root folder of your repo, run following command in sequence
+	```python
+	python manage.py makemigrations
+	```
+	```python
+	python manage.py sqlmigrate
+	```
+	```python
+	python manage.py migrate
+	```
+	> Schemas should have been created by now in your database.
+11. After that, run command 
 	```bash
 	python manage.py runserver
 	```
-9. Web app should be running at `http://localhost:8000/`
+12. Web app should be running at `http://localhost:8000/`
 
 # All Web Pages and Details: (For the time being) 
 **1) Home Page: (This will be the Index page of website)**
