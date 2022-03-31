@@ -47,8 +47,11 @@ def storeImage(str1, str2):
 		ret, frame = video_capture.read()
 		cv2.imshow('Video', frame)
 		# For testing purpose taking full image
-		# img = get_face_only(frame)
-		img = frame
+		img = get_face_only(frame)
+		if img!=[]:
+			img = frame
+		else:
+			img = []
 
 		# Strorage location
 		link = BASE_DIR + "\\media\\pics\\"
