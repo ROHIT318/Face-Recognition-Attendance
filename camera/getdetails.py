@@ -25,6 +25,12 @@ dim = (width, height)
 import numpy as np
 from numpy import asarray, expand_dims
 
+# To load SVM again
+def loadSVM():
+	global svm_model
+	SVM_DIR = os.path.join(base_dir, "{}\\{}".format('camera','SVM'))
+	svm_model = pickle.load(open(SVM_DIR, 'rb'))
+
 # Loading all unique ids from student table
 def getStudentList():
 	uniqueIdList = list()
@@ -35,6 +41,7 @@ def getStudentList():
 uniqueIdList = getStudentList()
 
 def getdetails():
+	loadSVM()
 	startAttendanceProcess = False
 	video_capture = cv2.VideoCapture(0, cv2.CAP_DSHOW)
 	video_capture.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
@@ -49,7 +56,7 @@ def getdetails():
 		formattedTime = int(datetime.now().strftime('%S'))
 		if startAttendanceProcess == False:
 			# amount of waiting time
-			waitTime = 15
+			waitTime = 10
 			tillTime = formattedTime + waitTime
 			if (tillTime >= 60):
 				tillTime = tillTime - 60
@@ -93,7 +100,9 @@ def get_name(img):
 	if len(face_img) != 0:
 		face_img_emb = get_embedding(face_img)
 		face_img_emb = np.expand_dims(face_img_emb, axis=0)
-		studentId = uniqueIdList[svm_model.predict(face_img_emb)[0]]
+		tempStudentId = uniqueIdList[svm_model.predict(face_img_emb)[0]]
+		if tempStudentId != '':
+			studentId = tempStudentId
 		return studentId
 	else:
 		return "Unable to detect."
