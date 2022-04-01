@@ -1,14 +1,14 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from .models import *
-from .getdetails import getdetails
+from .getdetails import getDetails
 from .register import storeImage, startTraining
 
 def home(request):
     return render(request, 'Index.html')
 
 def startCamera(request):
-    name = getdetails()
+    name = getDetails()
     return redirect('displayName', name)
 
 def displayName(request, name):
