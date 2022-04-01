@@ -2,7 +2,7 @@ import os
 import cv2
 import time
 from numpy import asarray
-from .getdetails import get_face_only, get_embedding
+from .getdetails import get_face_only, get_embedding, face_model
 from .models import registration_form
 from sklearn.preprocessing import Normalizer, LabelEncoder
 
@@ -13,7 +13,6 @@ from keras.models import load_model
 # To load scikit SVM model
 from sklearn.svm import SVC
 # To store and load trained SVM model
-# from sklearn.externals import joblib
 import pickle
 
 # Frame image dimension for feeding into model
@@ -22,11 +21,6 @@ height = 160
 dim = (width, height)
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-# Face recognition model
-base_dir = os.getcwd()
-model_dir = os.path.join(base_dir, "{}\\{}".format('camera','facenet'))
-face_model = load_model(model_dir)
 
 
 def storeImage(str1, str2):
