@@ -13,8 +13,7 @@ base_dir = os.getcwd()
 model_dir = os.path.join(base_dir, "{}\\{}".format('camera','facenet'))
 face_model = load_model(model_dir)
 faceCascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
-SVM_DIR = os.path.join(base_dir, "{}\\{}".format('camera','SVM'))
-svm_model = pickle.load(open(SVM_DIR, 'rb'))
+prevStudentId= "Unable to detect"
 
 # Frame image dimension for feeding into model
 width = 160
@@ -27,9 +26,9 @@ from numpy import asarray, expand_dims
 
 # To load SVM again
 def loadSVM():
-	global svm_model
 	SVM_DIR = os.path.join(base_dir, "{}\\{}".format('camera','SVM'))
 	svm_model = pickle.load(open(SVM_DIR, 'rb'))
+	return svm_model
 
 # Loading all unique ids from student table
 def getStudentList():
@@ -38,10 +37,11 @@ def getStudentList():
 	for student in students:
 		uniqueIdList.append(student.unique_id)
 	return uniqueIdList
-uniqueIdList = getStudentList()
 
-def getdetails():
-	loadSVM()
+def getDetails():
+	global prevStudentId
+	svm_model = loadSVM()
+	uniqueIdList = getStudentList()
 	startAttendanceProcess = False
 	video_capture = cv2.VideoCapture(0, cv2.CAP_DSHOW)
 	video_capture.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
@@ -49,8 +49,7 @@ def getdetails():
 	
 	while True:
 		ret, frame = video_capture.read()
-		final_frame, studentId = get_face_rectangle(frame)
-		# resizeFaceFrame = cv2.resize()
+		final_frame, studentId = get_face_rectangle(frame, svm_model, uniqueIdList)
 		cv2.imshow('Video', final_frame)
 
 		formattedTime = int(datetime.now().strftime('%S'))
@@ -66,6 +65,8 @@ def getdetails():
 			video_capture.release()
 			cv2.destroyAllWindows()
 			# Return name and id here
+			if studentId == "":
+				studentId = prevStudentId
 			return studentId
 
 		# Hit 'q' on the keyboard to quit!
@@ -75,7 +76,8 @@ def getdetails():
 	video_capture.release()
 	cv2.destroyAllWindows()
 
-def get_face_rectangle(img):
+def get_face_rectangle(img, svm_model, uniqueIdList):
+	global prevStudentId
 	text = ""
 	faces = faceCascade.detectMultiScale(
 		img,
@@ -84,28 +86,27 @@ def get_face_rectangle(img):
 		minSize=(30,30)
 	)
 	for (x, y, w, h) in faces:
-		text = get_name(img)
+		text = get_name(img, svm_model, uniqueIdList)
+		if text == "":
+			text = prevStudentId
 		font = cv2.FONT_HERSHEY_DUPLEX
 		cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 2)
 		cv2.putText(img, text, (x + 6, y - 6), font, 0.6, (255, 255, 255), 1)
 	return img, text
 
-def get_name(img):	
-	# Retaining last embedding and person name
-	global svm_model, uniqueIdList
-
+def get_name(img, svm_model, uniqueIdList):
+	global prevStudentId
 	face_img_emb = np.array([])
 	face_img = get_face_only(img)
 
 	if len(face_img) != 0:
 		face_img_emb = get_embedding(face_img)
 		face_img_emb = np.expand_dims(face_img_emb, axis=0)
-		tempStudentId = uniqueIdList[svm_model.predict(face_img_emb)[0]]
-		if tempStudentId != '':
-			studentId = tempStudentId
-		return studentId
+		studentId = uniqueIdList[svm_model.predict(face_img_emb)[0]]
+		prevStudentId = studentId
+		return prevStudentId
 	else:
-		return "Unable to detect."
+		return prevStudentId
 
 # Method to extraxt face from an image
 def get_face_only(img):
