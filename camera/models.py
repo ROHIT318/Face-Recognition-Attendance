@@ -1,12 +1,13 @@
 from django.db import models
 from django.contrib.auth.models import User
+import datetime
 
-# Registration table
+# Registration table (Img test pending)
 class registration_form(models.Model):
 	unique_id = models.CharField(max_length=10, primary_key=True)
 	name = models.CharField(max_length=60)
-	email = models.EmailField()
-	is_active = models.BooleanField()
+	email = models.EmailField(default='a@a.com')
+	is_active = models.BooleanField(default=True)
 	img_1 = models.ImageField(upload_to='pics')
 	img_2 = models.ImageField(upload_to='pics')
 	img_3 = models.ImageField(upload_to='pics')
@@ -19,11 +20,10 @@ class registration_form(models.Model):
 		return self.unique_id + ": " + self.name
 
 
-# Courses offered by institution
-class Courses(models.Model):
+# Courses offered by institution (DONE)
+class Courses(models.Model): 
 	subject_code = models.CharField(max_length=10, primary_key=True)
-	subject_teacher = models.CharField(max_length=30, blank=False)
-	subject_name = models.CharField(max_length=20, blank=False)
+	teacher_name = models.CharField(max_length=20, blank=False)
 
 	def __str__(self):
 		return self.subject_code
@@ -31,8 +31,8 @@ class Courses(models.Model):
 
 # Attendance sheet
 class Attendance_db(models.Model):
-	subject_code = models.ForeignKey(Courses, on_delete=models.CASCADE)
-	unique_id = models.ForeignKey(registration_form, on_delete=models.CASCADE)
+	subject_code = models.CharField(max_length=10)
+	unique_id = models.CharField(max_length=10)
 	date = models.DateField(default=datetime.date.today, blank=False)
 	time = models.TimeField(auto_now_add=True, blank=False)
 
@@ -42,7 +42,7 @@ class Attendance_db(models.Model):
 
 # All classes conducted in institution
 class Class_history(models.Model):
-	subject_code = models.ForeignKey(Courses, on_delete=models.CASCADE)
+	subject_code = models.CharField(max_length=10)
 	teacher_name = models.CharField(max_length=30, blank=False)
 	date_conducted = models.DateField(default=datetime.date.today, blank=False)
 	time_started = models.TimeField(auto_now_add=True, blank=False)
