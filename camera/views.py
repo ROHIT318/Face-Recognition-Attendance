@@ -65,12 +65,13 @@ def showAttendance(request):
         subject_code=request.session['subject_code'], unique_id=unique_id)
     markStudentPresent.save()
 
-    # allStudentsPresent = Attendance_db.objects.filter(date=datetime.date.today, 
-    #     subject_code=request.session['subject_code'])
-    # studentInformation = registration_form.objects.filter(unique_id=unique_id)
-    # # Combine both studentInformation and allstudentsPresent to create a final table.
+    allStudentsPresent = Attendance_db.objects.filter(date=datetime.date.today, 
+        subject_code=request.session['subject_code'])
+    studentInformation = registration_form.objects.filter(unique_id=unique_id)
+    for student in allStudentsPresent:
+        student['name'] = studentInformation['name']
 
-    # context = {'allStudentsPresent': allStudentsPresent}
+    context = {'allStudentsPresent': allStudentsPresent}
     return render(request, 'show_attendance.html')
 
 
