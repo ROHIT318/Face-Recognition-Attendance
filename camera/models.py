@@ -19,6 +19,9 @@ class registration_form(models.Model):
 	def __str__(self):
 		return self.unique_id + ": " + self.name
 
+	def get_name(self):
+		return self.name
+
 
 # Courses offered by institution (DONE)
 class Courses(models.Model): 
@@ -48,5 +51,4 @@ class Class_history(models.Model):
 	time_started = models.TimeField(auto_now_add=True, blank=False)
 
 	def __str__(self):
-		return self.subject_code + ": " + self.date_conducted
-
+		return self.subject_code + ": " + str(self.date_conducted)
