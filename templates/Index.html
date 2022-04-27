@@ -1,15 +1,23 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Camera</title>
-</head>
-<body>
+{% extends 'main.html' %}
+{% load static %}
 
-	<form action="startCamera" method="GET">
-		<input type="Submit" name="Start Camera">
-	</form>
+{% block title %}Homepage{% endblock title %}
 
-</body>
-</html>
+{% block body %} 
+<center>
+	<!-- <img src="{% static '/images/background.jpg' %}" alt="My image"> -->
+<div>
+  <a href="{% url 'startAttendance' %}" target="_parent">
+    <button type="button" class="btn btn-info" href="{% url 'startAttendance' %}">START ATTENDANCE</button>
+  </a>
+  <a href="{% url 'registerTeacher' %}" target="_parent">
+  <button type="button" class="btn btn-info" href="{% url 'registerTeacher' %}">REGISTER TEACHER</button>
+  </a>
+  <a href="{% url 'registerStudent' %}" target="_parent">
+  <button type="button" class="btn btn-info">REGISTER STUDENT</button>
+  </a>
+  
+</div>
+</center>
+
+{% endblock body %} 
