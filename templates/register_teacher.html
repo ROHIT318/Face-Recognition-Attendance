@@ -1,22 +1,76 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Register Teacher</title>
-</head>
-<body>
+{% extends 'main.html' %}
 
-	<form action="{% url 'registerTeacher' %}" method="POST">
-	{% csrf_token %}
-		<input type="text" name="t_id">
-		<input type="password" name="t_pswd">
-		<input type="text" name="t_first_name">
-		<input type="text" name="t_last_name">
-		<input type="text" name="t_subjectcode">
-		<input type="submit" name="Submit">
-	</form>
+{% block title %}REGISTER TEACHER{% endblock title %}
 
-
-</body>
-</html>
+{% block body %} 
+<form action="{% url 'registerTeacher' %}" method="POST">
+{% csrf_token %}
+  <table class="box" align="center"  cellspacing="5" cellpadding="5">
+    <tr>
+        <th>
+          <label for="ID"><b><font color="white">Teacher ID</font><b></label>
+        </th>  
+        <th>  
+          <input type ="text" name="t_id" size="10" maxlength="5" autocomplete="on"   
+                placeholder="Teacher ID" required="required" tabindex="1" onfocus="this.placeholder=' '" 
+                onblur="this.placeholder='Teacher ID'"/>
+        </th>
+      </tr>
+      <tr>    
+        <th>
+            <label for="Name"><b><font color="white">Teacher NAME</font><b></label>
+        </th> 
+        <th>   
+            <input type ="text" name="t_first_name" size="20" maxlength="30" autocomplete="on"   
+                  placeholder="Teacher NAME" required="required" tabindex="2" onfocus="this.placeholder=' '" 
+                  onblur="this.placeholder='Teacher NAME'"/>
+        </th>
+      </tr>
+      <tr>    
+        <th>
+            <label for="Name"><b><font color="white">Teacher NAME</font><b></label>
+        </th> 
+        <th>   
+            <input type ="text" name="t_last_name" size="20" maxlength="30" autocomplete="on"   
+                  placeholder="Teacher NAME" required="required" tabindex="2" onfocus="this.placeholder=' '" 
+                  onblur="this.placeholder='Teacher NAME'"/>
+        </th>
+      </tr>
+      <tr>
+          <th>
+            <label for="dept"><b><font color="white">Department</font><b></label> 
+          </th>      
+          <th>
+              <select>
+                  <option value="Computer Science">Computer Science</option>
+                  <option value="Statistics">Statistics</option>
+                  <option value="Mathematics">Mathematics</option>
+              </select>
+          </th>
+        </tr>
+        <tr>
+            <div class="dropdown show">
+              <th>
+                <label for="scode"><b><font color="white">Subject Code</font><b></label> 
+                </th>
+                <th>    
+                  <input type="text" name="t_subjectcode">
+                      </th>
+                          </div>
+          <tr>
+              <th>
+                <label for="Password"><b><font color="white">Password</font></b></label>
+            
+                </th>
+                <th>
+            <input type="password" required="required" name="t_pswd" size="20" minlength="6" maxlength="8" tabindex="5"  
+            placeholder="MIN 6 CHARS" onfocus="this.placeholder=' '"
+            onblur="this.placeholder='MIN 6 CHARS'"/>
+                </th>
+              </tr>
+            </table>
+                 <center>
+                 <input type="submit" class="btn btn-info" value="Submit">
+                 </center>
+</form>
+ {% endblock body %}  
