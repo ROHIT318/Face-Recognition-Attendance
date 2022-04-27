@@ -1,24 +1,53 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Take Attendance</title>
-</head>
-<body>
+{% extends 'main.html' %}
 
-	{% if msg %}
-		<div>{{ msg }}</div>
-	{% endif %}
+{% block title %}Start Attendance{% endblock title %}
 
-	<form action="{% url 'startAttendance' %}" method="POST">
-	{% csrf_token %}
-		<input type="text" name="t_id">
-		<input type="password" name="t_pswd">
-		<input type="text" name="subject_code">
-		<input type="text" name="delete_name">
-		<input type="submit" name="Submit">
-	</form>
-
-</body>
-</html>
+{% block body %} 
+<form action="{% url 'startAttendance' %}" method="POST">
+{% csrf_token %}
+  <table class="box" align="center"  cellspacing="5" cellpadding="5">
+    <tr>
+      <th>
+      <label for="Username"><b><font color="white">Teacher Username</font><b></label>
+      </th>
+      <th>
+        <input type ="text" name="t_id" size="20" maxlength="30" autocomplete="on"   
+            placeholder="Teacher UserName" required="required" tabindex="1" onfocus="this.placeholder=' '" 
+            onblur="this.placeholder='Teacher UserName'"/>
+			<font color="red">*</font>
+      </th>
+      <tr>
+        <th>
+      <label for="t_pswd"><b><font color="white">Password</font><b></label>
+        
+      </th>
+      <th>
+        <input type="password" required="required" name="t_pswd" size="20" minlength="6" maxlength="8" tabindex="2"  
+        placeholder="MIN 6 CHARS" onfocus="this.placeholder=' '"
+        onblur="this.placeholder='MIN 6 CHARS'"/>
+        <font color="red">*</font>
+      </th>
+      <tr>
+        <th>
+        <label for="subject_code"><b><font color="white">Subject Code</font><b></label> 
+        </th>
+        <th>       
+          <input type="text" name="subject_code">
+          </th>
+        </tr>
+      <tr>
+        <th>
+        <label for="teacher_name"><b><font color="white">Teacher Name</font><b></label> 
+        </th>
+        <th>       
+          <input type="text" name="teacher_name">
+          </th>
+        </tr>
+      </table>
+      <center>
+      <input type="submit" name="submit" class="btn btn-info">
+    </center>
+</form>
+            
+        
+{% endblock body %} 
