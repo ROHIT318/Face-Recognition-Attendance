@@ -1,15 +1,46 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Show Attendance</title>
-</head>
-<body>
+{% extends 'main.html' %}
 
-	{% for allStudentPresent in allStudentsPresent %}
-		<div>{{ allStudentPresent. }}</div>
-	{% endfor %}
+{% block title %} Contact {% endblock title %}
 
-</body>
-</html>
+{% block body %}  
+<div class="head">
+	<form action="{% url 'showAttendance' %}" method="POST">
+		{% csrf_token %}
+    	<button type="submit" class="btn btn-info">TAKE ATTENDANCE</button>
+    </form>
+    <form>
+    <a href="{% url 'home' %}" class="btn btn-info">Stop Attendance</a>
+  </form>
+</div>
+
+<div class="tbl-header">
+  <table cellpadding="0" cellspacing="0" border="0">
+    <thead>
+      <tr>
+        <th>CIN ID</th>
+        <th>NAME</th>
+        <th>SUBJECT CODE</th>
+        <th>DATE</th>
+        <th>TIME</th>
+      </tr>
+    </thead>
+  </table>
+</div>
+<div class="tbl-content">
+  <table cellpadding="0" cellspacing="0" border="0">
+    <tbody>
+      {% for student in allStudentsPresent %}
+      <tr>
+        <td>{{ student.unique_id }}</td>
+        <td>{{ student.full_name }}</td>
+        <td>{{ student.subject_code }}</td>
+        <td>{{ student.date }}</td>
+        <td>{{ student.time }}</td>
+      </tr>
+      {% endfor %}
+        
+          </tbody>
+  </table>
+</div>
+
+{% endblock body %} 
