@@ -110,7 +110,6 @@ def get_name(img, svm_model, uniqueIdList):
 
 # Method to extraxt face from an image
 def get_face_only(img):
-	face_img = []
 	faces = faceCascade.detectMultiScale(
 		img,
 		scaleFactor=1.3,
@@ -118,8 +117,6 @@ def get_face_only(img):
 		minSize=(30,30)
 	)
 	for (x, y, w, h) in faces:
-		text = ""
-		font = cv2.FONT_HERSHEY_DUPLEX
 		crop_img = img[y:y+h, x:x+w]
 		f_img = cv2.resize(crop_img, dim)
 		face_img = asarray(f_img)
