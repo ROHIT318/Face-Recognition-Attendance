@@ -42,6 +42,9 @@ def startAttendance(request):
         if user is not None:
             auth.login(request, user)
             request.session['subject_code'] = request.POST['subject_code']
+            newClass = Class_history.objects.create(subject_code=request.session['subject_code'],
+                teacher_name=request.POST['teacher_name'])
+            newClass.save()
             return redirect('showAttendance')
         else:
             context = {'msg': "Invalid Login Credentials"}
