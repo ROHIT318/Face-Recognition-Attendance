@@ -53,40 +53,47 @@ def startAttendance(request):
         return render(request, 'take_attendance.html')
 
 
-# Responsible for showing and taking attendance (Remove name arguement later)
+# Responsible for showing and taking attendance
 def showAttendance(request):
-    unique_id = 566
+    if request.method=='POST':
+        unique_id = getDetails()
 
-    markStudentPresent = Attendance_db.objects.create(
-        subject_code=request.session['subject_code'], unique_id=unique_id)
-    markStudentPresent.save()
+        markStudentPresent = Attendance_db.objects.create(
+            subject_code=request.session['subject_code'], unique_id=unique_id)
+        markStudentPresent.save()
 
-    allStudentsPresent = Attendance_db.objects.filter(date=datetime.date.today, 
-        subject_code=request.session['subject_code'])
-    studentInformation = registration_form.objects.filter(unique_id=unique_id)
-    for student in allStudentsPresent:
-        student['name'] = studentInformation['name']
+        allStudentsPresent = Attendance_db.objects.filter(date=datetime.date.today(), 
+                subject_code=request.session['subject_code'])
+        # Appending name column in attendance list
+        for student in allStudentsPresent:
+            studentInformation = registration_form.objects.filter(unique_id=student.unique_id)
+            student.full_name = studentInformation[0].name
 
-    context = {'allStudentsPresent': allStudentsPresent}
-    return render(request, 'show_attendance.html')
+        context = {'allStudentsPresent': allStudentsPresent}
+        return render(request, 'show_attendance.html', context)
+    else:
+        return render(request, 'show_attendance.html')
 
 
 # For test purpose only
 def registerStudent(request):
     if request.method == "POST":
-        # msg = storeImage(request.POST['unique_id'], request.POST['student_name'])
-        # context = {'msg': msg}
+        msg = storeImage(request.POST['s_unique_id'], request.POST['s_name'], 
+            request.POST['s_email'])
+        context = {'msg': msg}
+
         # return render(request, 'del_msg.html', context)
-        student = registration_form.objects.create(unique_id=request.POST['s_unique_id'], 
-            email=request.POST['s_email'], name=request.POST['s_name'])
-        student.save()
-        context = {'msg': "Student saved successfully."}
+        # student = registration_form.objects.create(unique_id=request.POST['s_unique_id'], 
+        #     email=request.POST['s_email'], name=request.POST['s_name'])
+        # student.save()
+        # context = {'msg': "Student saved successfully."}
+
         return render(request, 'register_student.html', context)
     else:
         return render(request, 'register_student.html')
 
 def train(request):
-    # message = startTraining()
-    # context = {'msg': message}
-    context = {'msg': "Maintanance On."}
-    return render(request, 'del_msg.html', context)
+    message = startTraining()
+    context = {'msg': message}
+    # context = {'msg': "Maintanance On."}
+    return render(request, 'Index.html', context)
