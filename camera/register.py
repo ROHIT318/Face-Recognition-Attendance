@@ -23,10 +23,11 @@ dim = (width, height)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
-def storeImage(str1, str2):
+def storeImage(str1, str2, str3):
 	global BASE_DIR
 	uniqueId = str1
 	studentName = str2
+	email = str3
 	# Face image variable
 	img = []
 	i = 1
@@ -103,7 +104,7 @@ def storeImage(str1, str2):
 		elif i==8:
 			# Storing Image in Database Here
 			student = registration_form.objects.create(unique_id=uniqueId, name=studentName, 
-				img_1=img_1, img_2=img_2, img_3=img_3, img_4=img_4, img_5=img_5, 
+				email=email, img_1=img_1, img_2=img_2, img_3=img_3, img_4=img_4, img_5=img_5, 
 				img_6=img_6, img_7=img_7)
 			student.save()
 
@@ -202,5 +203,4 @@ def startTraining():
 		pickle.dump(model, files)
 	# joblib.dump(model, filename)
 	print("SVM Model Saved!")
-
 	return trainAcc
