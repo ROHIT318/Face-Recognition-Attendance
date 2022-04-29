@@ -28,7 +28,7 @@ def registerTeacher(request):
         tName = t_first_name + " " + t_last_name
         course = Courses.objects.create(subject_code=t_subjectcode, teacher_name=tName)
         course.save()
-        return redirect('home', "Teacher registered successfully.")
+        return redirect('home')
     else:
         return render(request, 'register_teacher.html')
 
