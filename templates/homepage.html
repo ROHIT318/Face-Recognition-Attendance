@@ -1,0 +1,111 @@
+{% extends 'main.html' %}
+
+{% block title %}Homepage{% endblock title %}Homepage
+{% load static %}
+{% block body %}
+  {% comment %} <div class="container bg-danger">
+    {% comment %} <div class=" container-xxl my-4 p-3 mb-4 bg-dark"> {% endcomment %}
+        {% comment %} <div class=" bg-light col-md-12 justify-content-center align-self-center text-center">
+           {% endcomment %}
+          {% comment %} <div class="col  col-md-12  text-center bg-light">
+           <a href="/start" target="_parent">
+            <button type="button" class="btn btn-info btn-lg">START ATTENDANCE</button>
+          </a>
+          <a href="/reg_teacher" target="_parent">
+            <button type="button" class="btn btn-info btn-lg">REGISTER TEACHER</button>
+          </a>
+          <a href="/reg_student" target="_parent">
+            <button type="button" class="btn btn-info btn-lg">REGISTER STUDENT</button>
+          </a>
+          
+      </div>
+    </div> {% endcomment %}
+    
+    {% comment %} <div class = "col d-flex justify-content-center align-items-center">
+    <div class="container">
+		<div class="row mb-3">
+      <div class="col-md-4">
+				<div class="card">
+					<img src="https://source.unsplash.com/random/1920x1080" class="card-img-top" alt="...">
+					<div class="card-body">
+						<a href="/reg_teacher" target="_parent">
+            <button type="button" class="btn btn-info btn-lg">REGISTER TEACHER</button>
+          </a>
+        </div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="card">
+					<img src="https://source.unsplash.com/random/1920x1080" class="card-img-top" alt="...">
+					<div class="card-body">
+            <a href="/start" target="_parent">
+            <button type="button" class="btn btn-info btn-lg">START ATTENDANCE</button>
+          </a>
+					</div>
+				</div>
+			</div>
+			
+			<div class="col-md-4">
+				<div class="card">
+					<img src="https://source.unsplash.com/random/1920x1080" class="card-img-top" alt="...">
+					<div class="card-body">
+						<a href="/reg_student" target="_parent">
+            <button type="button" class="btn btn-info btn-lg">REGISTER STUDENT</button>
+          </a></div>
+				</div>
+			</div>
+		</div> {% endcomment %}
+
+
+	{% comment %} </div>
+</div> {% endcomment %}
+<main id = "team" class="pb-5 col d-flex justify-content-center align-items-center">
+    <div class="container">
+
+        <div class="row">
+            <div class="col-xs-12 col-md-4">
+              <div class="frontside">
+                <div class="card">
+                    <div class="card-body text-center">
+                      <p>
+                        <img class=" img-fluid " src="{% static 'images/teacher.jpg' %}" alt="card image">
+                      </p>
+                      <a href="/reg_teacher" target="_parent" class = "btn btn-info btn-lg">REGISTER TEACHER</a>
+                    </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xs-12  col-md-4">
+              <div class="frontside">
+                <div class="card">
+                  <div class="card-body text-center">
+                    <p>
+                      <img class=" img-fluid" src="{% static 'images/start_attendance.png' %}" alt="card image">
+                    </p>
+                    <a href="/start" target="_parent" class = "btn btn-info btn-lg">START ATTENDANCE</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xs-12 col-md-4">
+                        <div class="frontside">
+                            <div class="card">
+                                <div class="card-body text-center">
+                                    <p>
+                                      <img class=" img-fluid" src="{% static 'images/student.png' %}" alt="card image">
+                                    </p>
+                                    <a href="/reg_student" target="_parent" class="btn btn-info btn-lg">REGISTER STUDENT
+
+          </a></div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+  </main>
+{% endblock body %} 

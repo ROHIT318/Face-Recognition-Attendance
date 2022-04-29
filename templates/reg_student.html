@@ -1,0 +1,52 @@
+{% extends 'main.html' %}
+
+{% block title %}REGISTER STUDENT{% endblock title %}
+
+{% block body %} 
+
+<div class="pb-5 col d-flex justify-content-center align-items-center ">
+  <div class = "table-responsive container col-6 col-md-6 col-sm-8">
+
+  <table class="table table-borderless table-dark table-striped"  align="center"  cellspacing="5" cellpadding="5">
+    <h1 class = "form-heading">Student Registration</h1>
+    <tr>
+        <th>
+          <label class = "input-label-form" for="ID">Unique ID</label>
+        </th>
+        <td>
+          <input type ="text" name="t_id" size="10" maxlength="5" autocomplete="on"
+                class="input_form form-control" placeholder="Student Unique ID" required="required" tabindex="1" />
+        </td>
+      </tr>
+      <tr>    
+        <th>
+            <label class = "input-label-form" for="Name">Name</label>
+        </th> 
+        <td>   
+            <input type ="text" name="t_name" size="20" maxlength="30" autocomplete="on"
+                  class="input_form form-control" placeholder="Student NAME" required="required" tabindex="2" />
+        </td>
+      </tr>
+      
+          <tr>
+              <th>
+                <label class = "input-label-form" for="Email">Email</label>
+              </th>
+              <td>
+                <input type="email" required="required"  placeholder = "Email"
+                    class="input_form form-control">
+              </td>
+          </tr>
+          <tr>
+            <td align="center" colspan="2">
+                <div class="col-8">
+                  <a  href="/register" target="_parent" class="btn btn-primary btn-block btn_register">Capture</a>
+                 </div>
+          </td>
+          </tr>
+            </table>
+          </div>
+          </div>
+        </div>
+      </div>
+{% endblock body %}

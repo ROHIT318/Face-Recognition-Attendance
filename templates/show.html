@@ -1,0 +1,66 @@
+{% extends 'main.html' %}
+
+{% block title %} Contact {% endblock title %}
+
+{% block body %}<div class="pb-5 col d-flex justify-content-center align-items-center ">
+  <div class = "table-responsive container col-6 col-md-6 col-sm-8">
+
+  <table id = "table" class="table table-bordered table-dark table-striped"  align="center"  cellspacing="5" cellpadding="5">
+    <h1 class = "form-heading">Previous Record</h1>
+    <thead>
+    <tr>
+      {% comment %} # For dynamic content from database  {% endcomment %}
+      {% comment %} {% for heading in myTable[0] %} {% endcomment %}
+      {% comment %} <th>{{heading}}</th> {% endcomment %}
+      {% comment %} {% endfor %} {% endcomment %}
+      <th>Cin_id</th>
+      <th>Name</th>
+      <th>Subject Code</th>
+      <th>Date</th>
+      <th>Time</th>
+    </tr>
+  </thead>
+  <tbody>
+      {% comment %} # For dynamic content from database  {% endcomment %}
+      {% comment %} {% for row in myTable %} {% endcomment %}
+      {% comment %} {% for content in row %} {% endcomment %}
+      {% comment %} <td>{{content}}</td> {% endcomment %}
+      {% comment %} {% endfor %} {% endcomment %}
+      {% comment %} {% endfor %} {% endcomment %}
+    <tr>
+      <td>XXXX</td>
+      <td>Rohit Sharma</td>
+      <td>CMSMXXXX</td>
+      <td>07/03/2022</td>
+      <td>09:50</td>
+    </tr>
+    <tr>
+      <td>YYYY</td>
+      <td>Atrimay Saha</td>
+      <td>CMSMYYYY</td>
+      <td>07/03/2022</td>
+      <td>09:52</td>
+    </tr>
+    <tr>
+      <td>ZZZZ</td>
+      <td>Sanjibani Mishra</td>
+      <td>CMSMZZZZ</td>
+      <td>07/03/2022</td>
+      <td>09:53</td>
+    </tr>
+  </tbody>
+  <tr>
+            <td align="center" colspan="6">
+                <div class=" d-grid gap-2 d-md-block  text-center">
+                  <a  href="#" target="_parent" class="btn btn-primary btn-sm btn_register">TAKE ATTENDANCE</a>
+                  <a  href="#" target="_parent" class="btn btn-primary btn-sm btn_register">STOP ATTENDANCE</a>
+              </div>
+          </td>
+      </tr>
+            </table>
+          </div>
+          </div>
+
+
+
+{% endblock body %}

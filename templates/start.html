@@ -1,0 +1,54 @@
+{% extends 'main.html' %}
+
+{% block title %}Start Attendance{% endblock title %}
+
+{% block body %} 
+<div class="pb-5 col d-flex justify-content-center align-items-center ">
+  <div class = "table-responsive container col-6 col-md-6 col-sm-8">
+
+  <table class="table table-borderless table-dark table-striped"  align="center"  cellspacing="5" cellpadding="5">
+    <h1 class = "form-heading">Take Attendance</h1>
+    <tr>
+        <th>
+          <label class = "input-label-form " for="ID">Teacher ID</label>
+        </th>
+        <td>
+          <input type ="text" name="t_id" size="10" maxlength="5" autocomplete="on"
+                class="input_form form-control" placeholder="Teacher ID" required="required" tabindex="1" />
+        </td>
+      </tr>
+      <tr>
+              <th>
+                <label class = "input-label-form" for="Password">Password</label>
+              </th>
+              <td>
+                <input type="password" required="required" name="t_pswd" size="20" minlength="6" maxlength="8" tabindex="5" placeholder = "Password"
+                    class="input_form form-control">
+              </td>
+          </tr>
+        <tr>
+            <th>
+                <label class = "input-label-form" for="scode">Subject Code</label> 
+            </th>
+                <td>
+                  <select class="input_form form-control">
+                          <option value="#">Subject Code</option>
+                          <option value="CMSM4321">CMSM4321</option>
+                          <option value="CMSM4322">CMSM4322</option>
+                          <option value="CMSM4323">CMSM4323</option>
+                        </select>
+                  </td>
+          </tr>
+              <tr>
+            <td align="center" colspan="2">
+                <div class="col-8">
+                  <a  href="#" target="_parent" class="btn btn-primary btn-block btn_register">Submit</a>
+              </div>
+          </td>
+          </tr>
+            </table>
+          </div>
+          </div>
+        </div>
+      </div>
+{% endblock body %} 
