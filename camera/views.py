@@ -2,25 +2,18 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from .models import *
 from django.contrib.auth.models import User, auth
-# from .getdetails import getDetails
-# from .register import storeImage, startTraining
+from .getdetails import getDetails
+from .register import storeImage, startTraining
 
 
 def home(request):
     return render(request, 'Index.html')
 
-
-def startCamera(request):
-    # name = getDetails()
-    return 565
+def aboutUs(request):
+    return render(request, 'about_us.html')
 
 
-def displayName(request, name):
-    context = {'name': name}
-    return render(request, 'name_check.html', context)
-
-
-# register both teacher and their courses (DONE)
+# register both teacher and their courses
 def registerTeacher(request):
     if request.method == "POST":
         t_id = request.POST['t_id']
