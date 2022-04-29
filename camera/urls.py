@@ -3,18 +3,14 @@ from django.conf import settings
 from django.urls import path
 from . import views
 
-# app_name = camera
-
 urlpatterns = [
     path('', views.home, name='home'),
-    path('displayName/<str:name>', views.displayName, name='displayName'),
-    path('startCamera/', views.startCamera, name='startCamera'),
-    path('register/', views.register, name='register'),
-
-    # For test purpose
-    path('imageShow/', views.imageShow, name='imageShow'),
     path('train/', views.train, name='train'),
-    path('showId/', views.showId, name='showId'),
+    path('aboutUs/', views.aboutUs, name='aboutUs'),
+    path('showAttendance/', views.showAttendance, name='showAttendance'),
+    path('registerStudent/', views.registerStudent, name='registerStudent'),
+    path('registerTeacher/', views.registerTeacher, name='registerTeacher'),
+    path('startAttendance/', views.startAttendance, name='startAttendance'),
 ]
 
 urlpatterns = urlpatterns + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
