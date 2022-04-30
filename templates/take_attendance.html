@@ -5,49 +5,58 @@
 {% block body %} 
 <form action="{% url 'startAttendance' %}" method="POST">
 {% csrf_token %}
-  <table class="box" align="center"  cellspacing="5" cellpadding="5">
+<div class="pb-5 col d-flex justify-content-center align-items-center ">
+  <div class = "table-responsive container col-6 col-md-6 col-sm-8">
+
+  <table class="table table-borderless table-dark table-striped"  align="center"  cellspacing="5" cellpadding="5">
+    <h1 class = "form-heading">Take Attendance</h1>
     <tr>
-      <th>
-      <label for="Username"><b><font color="white">Teacher Username</font><b></label>
-      </th>
-      <th>
-        <input type ="text" name="t_id" size="20" maxlength="30" autocomplete="on"   
-            placeholder="Teacher UserName" required="required" tabindex="1" onfocus="this.placeholder=' '" 
-            onblur="this.placeholder='Teacher UserName'"/>
-			<font color="red">*</font>
-      </th>
-      <tr>
         <th>
-      <label for="t_pswd"><b><font color="white">Password</font><b></label>
-        
-      </th>
-      <th>
-        <input type="password" required="required" name="t_pswd" size="20" minlength="6" maxlength="8" tabindex="2"  
-        placeholder="MIN 6 CHARS" onfocus="this.placeholder=' '"
-        onblur="this.placeholder='MIN 6 CHARS'"/>
-        <font color="red">*</font>
-      </th>
-      <tr>
-        <th>
-        <label for="subject_code"><b><font color="white">Subject Code</font><b></label> 
+          <label class = "input-label-form " for="ID">Teacher ID</label>
         </th>
-        <th>       
-          <input type="text" name="subject_code">
-          </th>
-        </tr>
+        <td>
+          <input type ="text" name="t_id" size="10" maxlength="5" autocomplete="on"
+                class="input_form form-control" placeholder="Teacher ID" required="required" tabindex="1" />
+        </td>
+      </tr>
       <tr>
-        <th>
-        <label for="teacher_name"><b><font color="white">Teacher Name</font><b></label> 
-        </th>
-        <th>       
-          <input type="text" name="teacher_name">
-          </th>
-        </tr>
-      </table>
-      <center>
-      <input type="submit" name="submit" class="btn btn-info">
-    </center>
+              <th>
+                <label class = "input-label-form" for="Password">Password</label>
+              </th>
+              <td>
+                <input type="password" required="required" name="t_pswd" size="20" tabindex="2" placeholder = "Password"
+                    class="input_form form-control">
+              </td>
+          </tr>
+        <tr>
+            <th>
+                <label class = "input-label-form" for="subject_code">Subject Code</label> 
+            </th>
+                <td>
+                  <input type ="text" name="subject_code" size="10" autocomplete="on"
+                class="input_form form-control" placeholder="Subject Code" required="required" tabindex="3" />
+                  </td>
+          </tr>
+          <tr>
+            <th>
+                <label class = "input-label-form" for="teacher_name">Teacher Name</label> 
+            </th>
+                <td>
+                  <input type ="text" name="teacher_name" size="10" autocomplete="on"
+                class="input_form form-control" placeholder="Teacher Name" required="required" tabindex="3" />
+                  </td>
+          </tr>
+              <tr>
+            <td align="center" colspan="2">
+                <div class="col-8">
+                  <input type="submit" class="btn btn-primary btn-block btn_register" name="submit">
+              </div>
+          </td>
+          </tr>
+            </table>
+          </div>
+          </div>
+        </div>
+      </div>
 </form>
-            
-        
 {% endblock body %} 

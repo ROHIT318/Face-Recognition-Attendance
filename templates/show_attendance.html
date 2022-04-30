@@ -2,45 +2,56 @@
 
 {% block title %} Contact {% endblock title %}
 
-{% block body %}  
-<div class="head">
-	<form action="{% url 'showAttendance' %}" method="POST">
-		{% csrf_token %}
-    	<button type="submit" class="btn btn-info">TAKE ATTENDANCE</button>
-    </form>
-    <form>
-    <a href="{% url 'home' %}" class="btn btn-info">Stop Attendance</a>
-  </form>
-</div>
+{% block body %}<div class="pb-5 col d-flex justify-content-center align-items-center ">
+  <div class = "table-responsive container col-6 col-md-6 col-sm-8">
 
-<div class="tbl-header">
-  <table cellpadding="0" cellspacing="0" border="0">
+  <table id = "table" class="table table-bordered table-dark table-striped"  align="center"  cellspacing="5" cellpadding="5">
+    <h1 class = "form-heading">Previous Record</h1>
     <thead>
-      <tr>
-        <th>CIN ID</th>
-        <th>NAME</th>
-        <th>SUBJECT CODE</th>
-        <th>DATE</th>
-        <th>TIME</th>
+    <tr>
+      {% comment %} # For dynamic content from database  {% endcomment %}
+      {% comment %} {% for heading in myTable[0] %} {% endcomment %}
+      {% comment %} <th>{{heading}}</th> {% endcomment %}
+      {% comment %} {% endfor %} {% endcomment %}
+      <th>Cin_id</th>
+      <th>Name</th>
+      <th>Subject Code</th>
+      <th>Date</th>
+      <th>Time</th>
+    </tr>
+  </thead>
+  <tbody>
+      {% comment %} # For dynamic content from database  {% endcomment %}
+      {% comment %} {% for row in myTable %} {% endcomment %}
+      {% comment %} {% for content in row %} {% endcomment %}
+      {% comment %} <td>{{content}}</td> {% endcomment %}
+      {% comment %} {% endfor %} {% endcomment %}
+      {% comment %} {% endfor %} {% endcomment %}
+    {% for student in allStudentsPresent %}
+    <tr>
+      <td>{{ student.unique_id }}</td>
+      <td>{{ student.full_name }}</td>
+      <td>{{ student.subject_code }}</td>
+      <td>{{ student.date }}</td>
+      <td>{{ student.time }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+  <tr>
+            <td align="center" colspan="6">
+                <div class=" d-grid gap-2 d-md-block  text-center">
+                  <form action="{% url 'showAttendance' %}" method="POST">
+                  {% csrf_token %}
+                    <button type="submit" class="btn btn-primary btn-sm btn_register">TAKE ATTENDANCE</button>
+                  </form>
+                  <a  href="{% url 'home' %}" target="_parent" class="btn btn-primary btn-sm btn_register">STOP ATTENDANCE</a>
+              </div>
+          </td>
       </tr>
-    </thead>
-  </table>
-</div>
-<div class="tbl-content">
-  <table cellpadding="0" cellspacing="0" border="0">
-    <tbody>
-      {% for student in allStudentsPresent %}
-      <tr>
-        <td>{{ student.unique_id }}</td>
-        <td>{{ student.full_name }}</td>
-        <td>{{ student.subject_code }}</td>
-        <td>{{ student.date }}</td>
-        <td>{{ student.time }}</td>
-      </tr>
-      {% endfor %}
-        
-          </tbody>
-  </table>
-</div>
+            </table>
+          </div>
+          </div>
 
-{% endblock body %} 
+
+
+{% endblock body %}

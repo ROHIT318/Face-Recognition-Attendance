@@ -1,24 +1,62 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Register Student</title>
-</head>
-<body>
+{% extends 'main.html' %}
 
-	{% if msg %}
-		<div>{{ msg }}</div>
-	{% endif %}
+{% block title %}REGISTER STUDENT{% endblock title %}
 
-	<form action="{% url 'registerStudent' %}" method="POST">
-	{% csrf_token %}
-		<input type="text" name="s_unique_id">
-		<input type="text" name="s_email">
-		<input type="text" name="s_name">
-		<input type="submit" name="Submit">
-		<a href="{% url 'train' %}" class="btn btn-info">Stop Attendance</a>
-	</form>
+{% block body %} 
 
-</body>
-</html>
+<div class="pb-5 col d-flex justify-content-center align-items-center ">
+  <div class = "table-responsive container col-6 col-md-6 col-sm-8">
+
+  <table class="table table-borderless table-dark table-striped"  align="center"  cellspacing="5" cellpadding="5">
+    <h1 class = "form-heading">Student Registration</h1>
+    <form action="{% url 'registerStudent' %}" method="POST">
+    {% csrf_token %}
+    <tr>
+        <th>
+          <label class = "input-label-form" for="ID">Unique ID</label>
+        </th>
+        <td>
+          <input type ="text" name="s_unique_id" size="10" maxlength="5" autocomplete="on"
+                class="input_form form-control" placeholder="Student Unique ID" required="required" tabindex="1" />
+        </td>
+      </tr>
+      <tr>    
+        <th>
+            <label class = "input-label-form" for="Name">Name</label>
+        </th> 
+        <td>   
+            <input type ="text" name="s_name" size="20" maxlength="30" autocomplete="on"
+                  class="input_form form-control" placeholder="Student NAME" required="required" tabindex="2" />
+        </td>
+      </tr>
+      
+          <tr>
+              <th>
+                <label class = "input-label-form" for="Email">Email</label>
+              </th>
+              <td>
+                <input type="email" required="required"  placeholder = "Email"
+                    class="input_form form-control" name="s_email">
+              </td>
+          </tr>
+          <tr>
+            <td align="center" colspan="2">
+                <div class="col-8">
+                  <input type="submit" class="btn btn-primary btn-block btn_register" name="Submit">
+                 </div>
+          </td>
+          </tr>
+          <tr>
+            <td align="center" colspan="2">
+                <div class="col-8">
+                  <a href="{% url 'train' %}" class="btn btn-primary btn-block btn_register">Stop Attendance</a>
+                 </div>
+          </td>
+          </tr>
+        </form>
+            </table>
+          </div>
+          </div>
+        </div>
+      </div>
+{% endblock body %}
