@@ -24,7 +24,7 @@ dim = (width, height)
 import numpy as np
 from numpy import asarray, expand_dims
 
-# To load SVM again
+# To load SVM
 def loadSVM():
 	SVM_DIR = os.path.join(base_dir, "{}\\{}".format('camera','SVM'))
 	svm_model = pickle.load(open(SVM_DIR, 'rb'))
