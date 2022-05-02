@@ -82,12 +82,6 @@ def registerStudent(request):
             request.POST['s_email'])
         context = {'msg': msg}
 
-        # return render(request, 'del_msg.html', context)
-        # student = registration_form.objects.create(unique_id=request.POST['s_unique_id'], 
-        #     email=request.POST['s_email'], name=request.POST['s_name'])
-        # student.save()
-        # context = {'msg': "Student saved successfully."}
-
         return render(request, 'register_student.html', context)
     else:
         return render(request, 'register_student.html')
