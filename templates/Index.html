@@ -108,4 +108,13 @@
         </div>
     </div>
   </main>
+  <script>
+    var msg = "{{ msg }}";
+    if (msg === "") {
+      alert("Welcome to Attendance Recorder");
+    }
+    else if (msg != "") {
+      alert(msg);
+    }
+  </script>
 {% endblock body %} 
